@@ -41,8 +41,7 @@ public class ProfileService {
     public Profile lookupFirstMatch(String query) {
         String trimmed = query == null ? "" : query.trim();
         if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException("Name field is empty. Please enter a
-                    name to search.");
+            throw new IllegalArgumentException("Name field is empty. Please enter a name to search");
         }
         List<Profile> matches =
                 profileRepository.findByNameContainingIgnoreCaseOrderByNameAsc(trimmed);
@@ -60,8 +59,7 @@ public class ProfileService {
                     name.");
         }
         if (profileRepository.findByNameIgnoreCase(trimmed).isPresent()) {
-            throw new IllegalStateException("A profile named \"" + trimmed + "\"
-                    already exists.");
+            throw new IllegalStateException("A profile named \"" + trimmed + "\" already exists.");
         }
         return profileRepository.save(Profile.builder().name(trimmed).build());
     }
