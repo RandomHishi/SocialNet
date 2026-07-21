@@ -29,12 +29,10 @@ public class ImageCompressionService {
         try {
             original = ImageIO.read(new ByteArrayInputStream(originalBytes));
         } catch (IOException e) {
-            throw new IllegalArgumentException("Could not read the uploaded file as
-                    an image.");
+            throw new IllegalArgumentException("Could not read the uploaded file as an image.");
         }
         if (original == null) {
-            throw new IllegalArgumentException("The uploaded file is not a supported
-                    image format.");
+            throw new IllegalArgumentException("The uploaded file is not a supported image format.");
         }
         BufferedImage resized = resize(original);
         try {
@@ -48,8 +46,7 @@ public class ImageCompressionService {
         int width = original.getWidth();
         int height = original.getHeight();
         if (width <= MAX_DIMENSION && height <= MAX_DIMENSION) {
-            return original; // never upscale, matches the original pipeline's
-            withoutEnlargement
+            return original; // never upscale, matches the original pipeline's withoutEnlargement
         }
         double scale = Math.min((double) MAX_DIMENSION / width, (double)
                 MAX_DIMENSION / height);
@@ -75,8 +72,7 @@ public class ImageCompressionService {
         ImageWriter writer = ImageIO.getImageWritersByMIMEType("image/webp").next();
         WebPWriteParam writeParam = new WebPWriteParam(writer.getLocale());
         writeParam.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        writeParam.setCompressionType(writeParam.getCompressionTypes()[WebPWriteParam.LOSSY_
-                COMPRESSION]);
+        writeParam.setCompressionType(writeParam.getCompressionTypes()[WebPWriteParam.LOSSY_COMPRESSION]);
         writeParam.setCompressionQuality(WEBP_QUALITY);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try (MemoryCacheImageOutputStream output = new

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import ph.edu.dlsu.lbycpob.profilemanager.dto.Dtos.ApiError;
 import java.util.NoSuchElementException;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(NoSuchElementException.class)
@@ -28,8 +29,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiError> handleTooLarge(MaxUploadSizeExceededException ex)
     {
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
-                .body(new ApiError("File too large. Maximum allowed size is 10
-                        MB."));
+                .body(new ApiError("File too large. Maximum allowed size is 10 MB."));
     }
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiError> handleUnexpected(Exception ex) {

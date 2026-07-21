@@ -55,8 +55,7 @@ public class ProfileService {
     public Profile createProfile(String name) {
         String trimmed = name == null ? "" : name.trim();
         if (trimmed.isEmpty()) {
-            throw new IllegalArgumentException("Name field is empty. Please enter a
-                    name.");
+            throw new IllegalArgumentException("Name field is empty. Please enter a name.");
         }
         if (profileRepository.findByNameIgnoreCase(trimmed).isPresent()) {
             throw new IllegalStateException("A profile named \"" + trimmed + "\" already exists.");
@@ -68,15 +67,15 @@ public class ProfileService {
         if (!profileRepository.existsById(id)) {
             throw new NoSuchElementException("Profile not found.");
         }
-        profileRepository.deleteById(id); // ON DELETE CASCADE removes related
-        friends rows
+        profileRepository.deleteById(id); // ON DELETE CASCADE removes related friends rows
     }
     @Transactional
     public void updateStatus(UUID id, String status) {
         String trimmed = status == null ? "" : status.trim();
         if (trimmed.isEmpty()) {
             throw new IllegalArgumentException("Status field is empty.");
-        }getProfile(id).setStatus(trimmed);
+        }
+        getProfile(id).setStatus(trimmed);
     }
     @Transactional
     public void updateQuote(UUID id, String quote) {
@@ -140,24 +139,20 @@ public class ProfileService {
         Profile self = getProfile(profileId);
         Profile friend = findByNameOrThrow(friendName);
         if (friend.getId().equals(self.getId())) {
-            throw new IllegalArgumentException("A profile cannot be friends with
-                    itself.");
+            throw new IllegalArgumentException("A profile cannot be friends with itself.");
         }
         boolean forwardExists =
                 friendRepository.existsByProfileIdAndFriendId(self.getId(), friend.getId());
         boolean reverseExists =
                 friendRepository.existsByProfileIdAndFriendId(friend.getId(), self.getId());
         if (forwardExists && reverseExists) {
-            throw new IllegalStateException("\"" + friend.getName() + "\" is already
-                    a friend.");
+            throw new IllegalStateException("\"" + friend.getName() + "\" is already a friend.");
         }
         if (!forwardExists) {
-            friendRepository.save(Friend.builder().profileId(self.getId()).friendId(friend.getId
-                    ()).build());
+            friendRepository.save(Friend.builder().profileId(self.getId()).friendId(friend.getId()).build());
         }
         if (!reverseExists) {
-            friendRepository.save(Friend.builder().profileId(friend.getId()).friendId(self.getId
-                    ()).build());
+            friendRepository.save(Friend.builder().profileId(friend.getId()).friendId(self.getId()).build());
         }
         return friend.getName();
     }
@@ -175,7 +170,6 @@ public class ProfileService {
         }
         return profileRepository.findByNameIgnoreCase(trimmed)
                 .orElseThrow(() -> new NoSuchElementException(
-                        "No profile named \"" + trimmed + "\" exists. Add that
-                        profile first."));
+                        "No profile named \"" + trimmed + "\" exists. Add that profile first."));
     }
 }
