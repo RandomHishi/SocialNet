@@ -28,4 +28,3 @@ COPY --from=build /app/target/*.jar app.jar
 # just make sure the app actually binds to that env var, which it does.
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
-ENTRYPOINT ["top", "-b"]
